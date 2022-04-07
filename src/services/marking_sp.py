@@ -1,5 +1,4 @@
 import shutil
-import math
 
 import pandas as pd
 import docx
@@ -45,13 +44,26 @@ class Marking:
         dict_result = {}
         for i in result.iterrows():
             dict_result[i[1][0]] = i[1][1]
-
+        await self.create_row(dict_result)
         return result
 
-    def create_row(self, count: int, value: int, quantity_sku: int):
-        document = docx.Document(r"C:\Users\User\code\my_tools\data\mark_table.docx")
+    async def generate_rows(self, ):
+        pass
+
+    async def create_row(self, sku: dict):
+        document = docx.Document(r"C:\Users\User\PycharmProjects\my_tools\data\mark_table.docx")
+        table = document.tables[0]
+        for cell in table.rows[0].cells:
+            if not cell.text:
+                cell.text = str(sku[30493])
+            else:
+                cell.text = str(sku[32126])
+        document.save('1.docx')
+
+
 
     async def write_in_table(self, sku: dict):
         for k, v in sku.items():
-            self.create_row(count=v, value=k, quantity_sku=len(sku))
+            pass
+
 
